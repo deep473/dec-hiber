@@ -1,12 +1,10 @@
 package learn.demo.hibernate;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
@@ -15,6 +13,13 @@ public class App
     	conf.configure("hibernate.cfg.xml");
     	
     	SessionFactory factory = conf.buildSessionFactory();
-    	System.out.println(factory);
+    	
+    	Session s = factory.openSession();
+    	Transaction tx = s.beginTransaction();
+    	
+    	Student st = new Student(1,"Deep",22,7.5f);
+    	s.persist(st);
+    	
+    	tx.commit();
     }
 }
